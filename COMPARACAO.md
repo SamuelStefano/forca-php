@@ -42,6 +42,12 @@ Essa é a maior diferença.
 - A favor: o estado fica seguro no servidor, longe do jogador. É o modelo certo quando não dá pra confiar no cliente (ex: um jogo valendo nota ou dinheiro).
 - Contra: cada jogada recarrega a página e depende da rede, então parece mais lento. Precisa de um servidor PHP no ar.
 
-## Conclusão
+## Minha conclusão
 
-Para um joguinho simples, o JavaScript ganha em experiência: é mais rápido e mais fácil de publicar. O PHP brilha quando a regra do jogo precisa ser protegida — aí faz sentido pagar o custo do round-trip para manter o estado no servidor. Na prática, sistemas grandes misturam os dois: o servidor guarda o que é importante e o JavaScript cuida da parte visual para a tela responder rápido.
+Fazendo os dois lado a lado, o que mais me chamou atenção foi como a mesma ideia simples muda de cara dependendo de onde a lógica roda.
+
+No JavaScript a sensação é melhor na hora de jogar. Clico numa letra e responde na hora, sem tela piscando. E publicar é ridículo de fácil: são três arquivos, abro em qualquer lugar. Pra um jogo da forca, que ninguém liga se o jogador "trapacear", essa seria a escolha que eu faria sem pensar muito.
+
+Mas foi justamente fazendo a versão PHP que caiu a ficha do porquê o server-side existe. Quando abri o console na versão JS, a palavra sorteada estava ali, de bandeja — dava pra ganhar sem jogar. Na versão PHP isso não acontece, porque a palavra nunca sai do servidor. Aí faz sentido aguentar o "peso" de recarregar a página a cada jogada: você troca um pouco de velocidade por confiança. Se isso aqui fosse um jogo valendo nota, dinheiro ou ranking, eu não pensaria duas vezes em deixar a regra no servidor.
+
+No fim achei que não é bem "um é melhor que o outro". É mais sobre em quem dá pra confiar. Se dá pra confiar no navegador, o JS entrega uma experiência bem melhor. Se não dá, o servidor precisa ser o dono da verdade. Não é à toa que os sistemas grandes acabam usando os dois juntos — o servidor guarda o que importa e o JavaScript cuida de deixar a tela rápida e gostosa de usar.
