@@ -64,6 +64,24 @@ h1 {
 .tecla.acerto { background: var(--acerto); color: #06371b; }
 .tecla.erro { background: var(--erro); color: #fff; }
 
+.dica { font-size: 1.1rem; color: var(--traco); }
+.dica strong { color: var(--texto); }
+.vidas { font-size: 1rem; color: var(--traco); margin-top: .3rem; }
+
+.nova {
+    margin-top: 1.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: .7rem 1.6rem;
+    border: 2px solid var(--bg2);
+    border-radius: .6rem;
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+    transition: background .2s;
+}
+.nova:hover { background: var(--bg2); }
+
 .status { font-size: 1.4rem; font-weight: 700; margin: 1.5rem 0; }
 .venceu { color: var(--acerto); }
 .perdeu { color: var(--erro); }

@@ -2,20 +2,35 @@
 session_start();
 require __DIR__ . '/forca.php';
 
-$PALAVRAS = ['LEAO', 'GIRAFA', 'ELEFANTE', 'CAVALO', 'TUBARAO', 'PERIQUITO'];
+$CATEGORIAS = [
+    'Animais' => ['LEAO', 'GIRAFA', 'ELEFANTE', 'CAVALO', 'TUBARAO', 'PERIQUITO'],
+    'Frutas' => ['ABACAXI', 'MORANGO', 'MELANCIA', 'LARANJA', 'GOIABA', 'MARACUJA'],
+    'Países' => ['BRASIL', 'ARGENTINA', 'PORTUGAL', 'JAPAO', 'CANADA', 'EGITO'],
+    'Tecnologia' => ['TECLADO', 'MONITOR', 'INTERNET', 'ALGORITMO', 'SERVIDOR', 'COMPILADOR'],
+];
 
-function novoJogo(array $palavras): void
+function novoJogo(array $categorias): void
 {
+    $categoria = array_rand($categorias);
+    $palavras = $categorias[$categoria];
+    $_SESSION['categoria'] = $categoria;
     $_SESSION['palavra'] = $palavras[array_rand($palavras)];
     $_SESSION['acertos'] = [];
     $_SESSION['erros'] = [];
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova'])) {
+    novoJogo($CATEGORIAS);
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
 if (!isset($_SESSION['palavra'])) {
-    novoJogo($PALAVRAS);
+    novoJogo($CATEGORIAS);
 }
 
 $palavra = $_SESSION['palavra'];
+$categoria = $_SESSION['categoria'];
 $acertos = $_SESSION['acertos'];
 $erros = $_SESSION['erros'];
 $maxErros = 6;
@@ -57,7 +72,8 @@ foreach (str_split($palavra) as $c) {
 <body>
     <h1>Jogo da Forca</h1>
 
-    <p>Erros: <?= count($erros) ?> / <?= $maxErros ?></p>
+    <p class="dica">Categoria: <strong><?= $categoria ?></strong></p>
+    <p class="vidas">Vidas restantes: <?= $maxErros - count($erros) ?></p>
 
     <?= desenhaForca(count($erros)) ?>
 
@@ -79,6 +95,10 @@ foreach (str_split($palavra) as $c) {
             ?>
             <button type="submit" name="letra" value="<?= $tecla ?>" class="tecla<?= $classe ?>" <?= $bloqueada ? 'disabled' : '' ?>><?= $tecla ?></button>
         <?php endforeach; ?>
+    </form>
+
+    <form method="post">
+        <button type="submit" name="nova" value="1" class="nova">Nova palavra</button>
     </form>
 </body>
 </html>
