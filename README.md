@@ -39,6 +39,21 @@ Depois abra <http://localhost:8082> no navegador.
 | v0.5.0  | Placar (vitórias/derrotas/sequência) no `$_SESSION`                 |
 | v1.0.0  | Polish de produção: responsivo, acessibilidade, animações, docs     |
 
+### Por que versionamento semântico de produção
+
+O versionamento segue o padrão **SemVer** (`MAJOR.MINOR.PATCH`):
+
+- **MAJOR** (`1.x.x`): muda algo que quebra compatibilidade.
+- **MINOR** (`x.1.x`): adiciona uma funcionalidade nova.
+- **PATCH** (`x.x.1`): corrige um bug.
+
+A parte "de produção" é o ponto principal: cada versão é uma **entrega de valor**,
+ou seja, um estado do jogo que já poderia ir ao ar e ser usado pelo jogador. Não são
+commits de rascunho ("wip", "ajustei o css"), e sim incrementos completos — a pergunta
+em cada release é "isso entrega valor pro usuário?". Por isso a v0.1.0 já é um jogo
+jogável, e cada versão seguinte soma uma funcionalidade utilizável, até a v1.0.0
+pronta para produção.
+
 ## Arquitetura: por que server-side
 
 Diferente da versão JavaScript, aqui **nada de lógica roda no navegador**. Todo o
