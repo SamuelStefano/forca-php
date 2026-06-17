@@ -1,0 +1,69 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --bg: #16213e;
+    --bg2: #0f3460;
+    --painel: #1a1a2e;
+    --acerto: #4ade80;
+    --erro: #e94560;
+    --texto: #eef2ff;
+    --traco: #a7a7c5;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: radial-gradient(circle at top, var(--bg2), var(--bg));
+    color: var(--texto);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: .05em;
+    margin-bottom: .5rem;
+}
+
+.palavra {
+    font-size: 2.4rem;
+    letter-spacing: .6rem;
+    font-weight: 700;
+    margin: 1.5rem 0;
+    min-height: 3rem;
+    font-family: 'Courier New', monospace;
+}
+
+.forca { width: 200px; height: 250px; }
+
+.teclado {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: .4rem;
+    max-width: 480px;
+    margin: 1rem auto;
+}
+
+.tecla {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: .7rem 0;
+    border: none;
+    border-radius: .5rem;
+    background: var(--bg2);
+    color: var(--texto);
+    cursor: pointer;
+    transition: transform .1s, background .2s;
+}
+
+.tecla:hover:not(:disabled) { transform: translateY(-2px); background: #1f4d8a; }
+.tecla:disabled { cursor: not-allowed; opacity: .85; }
+.tecla.acerto { background: var(--acerto); color: #06371b; }
+.tecla.erro { background: var(--erro); color: #fff; }
+
+.status { font-size: 1.4rem; font-weight: 700; margin: 1.5rem 0; }
+.venceu { color: var(--acerto); }
+.perdeu { color: var(--erro); }

@@ -52,15 +52,7 @@ foreach (str_split($palavra) as $c) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo da Forca</title>
-    <style>
-        body { font-family: sans-serif; background: #1a1a2e; color: #eee; text-align: center; padding: 2rem; }
-        .palavra { font-size: 2rem; letter-spacing: .5rem; margin: 2rem 0; }
-        button { font-size: 1rem; padding: .5rem 1rem; margin: .2rem; cursor: pointer; }
-        .status { font-size: 1.2rem; margin: 1rem 0; }
-        .venceu { color: #4ade80; }
-        .perdeu { color: #f87171; }
-        .forca { width: 200px; height: 250px; }
-    </style>
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
     <h1>Jogo da Forca</h1>
@@ -75,15 +67,18 @@ foreach (str_split($palavra) as $c) {
         <p class="status venceu">Voce venceu!</p>
     <?php elseif ($perdeu): ?>
         <p class="status perdeu">Voce perdeu! A palavra era: <?= $palavra ?></p>
-    <?php else: ?>
-        <div>
-            <?php foreach (range('A', 'Z') as $tecla): ?>
-                <?php $usada = in_array($tecla, $acertos) || in_array($tecla, $erros); ?>
-                <form method="post" style="display:inline">
-                    <button type="submit" name="letra" value="<?= $tecla ?>" <?= $usada ? 'disabled' : '' ?>><?= $tecla ?></button>
-                </form>
-            <?php endforeach; ?>
-        </div>
     <?php endif; ?>
+
+    <form method="post" class="teclado">
+        <?php foreach (range('A', 'Z') as $tecla): ?>
+            <?php
+            $acertou = in_array($tecla, $acertos);
+            $errou = in_array($tecla, $erros);
+            $classe = $acertou ? ' acerto' : ($errou ? ' erro' : '');
+            $bloqueada = $acertou || $errou || $venceu || $perdeu;
+            ?>
+            <button type="submit" name="letra" value="<?= $tecla ?>" class="tecla<?= $classe ?>" <?= $bloqueada ? 'disabled' : '' ?>><?= $tecla ?></button>
+        <?php endforeach; ?>
+    </form>
 </body>
 </html>
