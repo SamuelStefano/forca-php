@@ -16,9 +16,27 @@ body {
     color: var(--texto);
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
     padding: 2rem 1rem;
+}
+
+.cartao {
+    background: rgba(26, 26, 46, .6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, .06);
+    border-radius: 1.2rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 540px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+    animation: surge .4s ease;
+}
+
+@keyframes surge {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
@@ -43,8 +61,7 @@ h1 {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     gap: .4rem;
-    max-width: 480px;
-    margin: 1rem auto;
+    margin: 1rem auto 0;
 }
 
 .tecla {
@@ -68,6 +85,7 @@ h1 {
     display: flex;
     gap: 1rem;
     margin: 1rem 0;
+    justify-content: center;
 }
 .placar div {
     background: var(--bg2);
@@ -104,6 +122,27 @@ h1 {
 }
 .nova:hover { background: var(--bg2); }
 
-.status { font-size: 1.4rem; font-weight: 700; margin: 1.5rem 0; }
+.status-area { min-height: 1.5rem; margin: 1rem 0; }
+.status { font-size: 1.4rem; font-weight: 700; animation: surge .3s ease; }
 .venceu { color: var(--acerto); }
 .perdeu { color: var(--erro); }
+
+.tecla:focus-visible,
+.nova:focus-visible {
+    outline: 3px solid var(--acerto);
+    outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .cartao { padding: 1.2rem; }
+    h1 { font-size: 1.8rem; }
+    .palavra { font-size: 1.8rem; letter-spacing: .35rem; }
+    .placar div { padding: .5rem .8rem; }
+    .placar span { font-size: 1.3rem; }
+    .tecla { font-size: 1rem; padding: .6rem 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cartao, .status { animation: none; }
+    .tecla { transition: none; }
+}

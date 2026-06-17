@@ -88,41 +88,46 @@ foreach (str_split($palavra) as $c) {
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-    <h1>Jogo da Forca</h1>
+    <main class="cartao">
+        <h1>Jogo da Forca</h1>
 
-    <div class="placar">
-        <div><span><?= $placar['vitorias'] ?></span>Vitorias</div>
-        <div><span><?= $placar['derrotas'] ?></span>Derrotas</div>
-        <div><span><?= $placar['sequencia'] ?></span>Sequencia</div>
-    </div>
+        <div class="placar" aria-label="Placar">
+            <div><span><?= $placar['vitorias'] ?></span>Vitorias</div>
+            <div><span><?= $placar['derrotas'] ?></span>Derrotas</div>
+            <div><span><?= $placar['sequencia'] ?></span>Sequencia</div>
+        </div>
 
-    <p class="dica">Categoria: <strong><?= $categoria ?></strong></p>
-    <p class="vidas">Vidas restantes: <?= $maxErros - count($erros) ?></p>
+        <p class="dica">Categoria: <strong><?= $categoria ?></strong></p>
+        <p class="vidas">Vidas restantes: <?= $maxErros - count($erros) ?></p>
 
-    <?= desenhaForca(count($erros)) ?>
+        <?= desenhaForca(count($erros)) ?>
 
-    <div class="palavra"><?= trim($mascara) ?></div>
+        <div class="palavra" aria-label="Palavra a adivinhar"><?= trim($mascara) ?></div>
 
-    <?php if ($venceu): ?>
-        <p class="status venceu">Voce venceu!</p>
-    <?php elseif ($perdeu): ?>
-        <p class="status perdeu">Voce perdeu! A palavra era: <?= $palavra ?></p>
-    <?php endif; ?>
+        <div class="status-area" role="status" aria-live="polite">
+            <?php if ($venceu): ?>
+                <p class="status venceu">Voce venceu!</p>
+            <?php elseif ($perdeu): ?>
+                <p class="status perdeu">Voce perdeu! A palavra era: <?= $palavra ?></p>
+            <?php endif; ?>
+        </div>
 
-    <form method="post" class="teclado">
-        <?php foreach (range('A', 'Z') as $tecla): ?>
-            <?php
-            $acertou = in_array($tecla, $acertos);
-            $errou = in_array($tecla, $erros);
-            $classe = $acertou ? ' acerto' : ($errou ? ' erro' : '');
-            $bloqueada = $acertou || $errou || $venceu || $perdeu;
-            ?>
-            <button type="submit" name="letra" value="<?= $tecla ?>" class="tecla<?= $classe ?>" <?= $bloqueada ? 'disabled' : '' ?>><?= $tecla ?></button>
-        <?php endforeach; ?>
-    </form>
+        <form method="post" class="teclado" aria-label="Teclado virtual">
+            <?php foreach (range('A', 'Z') as $tecla): ?>
+                <?php
+                $acertou = in_array($tecla, $acertos);
+                $errou = in_array($tecla, $erros);
+                $classe = $acertou ? ' acerto' : ($errou ? ' erro' : '');
+                $bloqueada = $acertou || $errou || $venceu || $perdeu;
+                $rotulo = 'Letra ' . $tecla . ($acertou ? ' (acerto)' : ($errou ? ' (erro)' : ''));
+                ?>
+                <button type="submit" name="letra" value="<?= $tecla ?>" class="tecla<?= $classe ?>" aria-label="<?= $rotulo ?>" <?= $bloqueada ? 'disabled' : '' ?>><?= $tecla ?></button>
+            <?php endforeach; ?>
+        </form>
 
-    <form method="post">
-        <button type="submit" name="nova" value="1" class="nova">Nova palavra</button>
-    </form>
+        <form method="post">
+            <button type="submit" name="nova" value="1" class="nova" aria-label="Sortear nova palavra">Nova palavra</button>
+        </form>
+    </main>
 </body>
 </html>
