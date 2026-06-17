@@ -17,6 +17,11 @@ function novoJogo(array $categorias): void
     $_SESSION['palavra'] = $palavras[array_rand($palavras)];
     $_SESSION['acertos'] = [];
     $_SESSION['erros'] = [];
+    $_SESSION['computado'] = false;
+}
+
+if (!isset($_SESSION['placar'])) {
+    $_SESSION['placar'] = ['vitorias' => 0, 'derrotas' => 0, 'sequencia' => 0];
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova'])) {
@@ -55,6 +60,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['letra'])) {
 $venceu = count(array_diff(str_split($palavra), $acertos)) === 0;
 $perdeu = count($erros) >= $maxErros;
 
+if (($venceu || $perdeu) && empty($_SESSION['computado'])) {
+    if ($venceu) {
+        $_SESSION['placar']['vitorias']++;
+        $_SESSION['placar']['sequencia']++;
+    } else {
+        $_SESSION['placar']['derrotas']++;
+        $_SESSION['placar']['sequencia'] = 0;
+    }
+    $_SESSION['computado'] = true;
+}
+
+$placar = $_SESSION['placar'];
+
 $mascara = '';
 foreach (str_split($palavra) as $c) {
     $mascara .= in_array($c, $acertos) ? $c : '_';
@@ -71,6 +89,12 @@ foreach (str_split($palavra) as $c) {
 </head>
 <body>
     <h1>Jogo da Forca</h1>
+
+    <div class="placar">
+        <div><span><?= $placar['vitorias'] ?></span>Vitorias</div>
+        <div><span><?= $placar['derrotas'] ?></span>Derrotas</div>
+        <div><span><?= $placar['sequencia'] ?></span>Sequencia</div>
+    </div>
 
     <p class="dica">Categoria: <strong><?= $categoria ?></strong></p>
     <p class="vidas">Vidas restantes: <?= $maxErros - count($erros) ?></p>

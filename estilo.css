@@ -64,6 +64,28 @@ h1 {
 .tecla.acerto { background: var(--acerto); color: #06371b; }
 .tecla.erro { background: var(--erro); color: #fff; }
 
+.placar {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+.placar div {
+    background: var(--bg2);
+    border-radius: .6rem;
+    padding: .6rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    font-size: .8rem;
+    color: var(--traco);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+.placar span {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--texto);
+}
+
 .dica { font-size: 1.1rem; color: var(--traco); }
 .dica strong { color: var(--texto); }
 .vidas { font-size: 1rem; color: var(--traco); margin-top: .3rem; }
