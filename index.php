@@ -1,5 +1,6 @@
 <?php
 session_start();
+require __DIR__ . '/forca.php';
 
 $PALAVRAS = ['LEAO', 'GIRAFA', 'ELEFANTE', 'CAVALO', 'TUBARAO', 'PERIQUITO'];
 
@@ -58,12 +59,15 @@ foreach (str_split($palavra) as $c) {
         .status { font-size: 1.2rem; margin: 1rem 0; }
         .venceu { color: #4ade80; }
         .perdeu { color: #f87171; }
+        .forca { width: 200px; height: 250px; }
     </style>
 </head>
 <body>
     <h1>Jogo da Forca</h1>
 
     <p>Erros: <?= count($erros) ?> / <?= $maxErros ?></p>
+
+    <?= desenhaForca(count($erros)) ?>
 
     <div class="palavra"><?= trim($mascara) ?></div>
 
